@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import br.edu.infnet.leticia.JSports.dto.*;
 import br.edu.infnet.leticia.JSports.enums.TipoUsuario;
-import br.edu.infnet.leticia.JSports.model.Usuario;
+import br.edu.infnet.leticia.JSports.model.domain.Usuario;
 
 public class CsvUtils {
 
@@ -57,7 +57,7 @@ public class CsvUtils {
 
 	}
 
-	public static boolean encontrarCadastro(UsuarioDTO usuarioLogin, String caminho) throws IOException {
+	public static UsuarioDTO encontrarCadastro(UsuarioDTO usuarioLogin, String caminho) throws IOException {
 
 		try (BufferedReader leitor = new BufferedReader(new FileReader(caminho))) {
 			String linha;
@@ -66,12 +66,11 @@ public class CsvUtils {
 				String[] info = linha.split("; ");
 
 				if (info[2].equals(usuarioLogin.getEmail()) && info[3].equals(usuarioLogin.getSenha())) {
-					return true;
+					return new UsuarioDTO(info[1], info[2], info[3], info[4], TipoUsuario.valueOf(info[5]));
 				}
 			}
 		}
-
-		return false;
+		return null;
 	}
 
 	public static long encontrarId(String caminho) throws IOException {

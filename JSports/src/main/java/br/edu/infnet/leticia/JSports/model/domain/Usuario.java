@@ -1,6 +1,7 @@
-package br.edu.infnet.leticia.JSports.model;
+package br.edu.infnet.leticia.JSports.model.domain;
 
 import br.edu.infnet.leticia.JSports.enums.TipoUsuario;
+import br.edu.infnet.leticia.JSports.model.Model;
 
 public class Usuario extends Model {
 	

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Scanner;
 
 import br.edu.infnet.leticia.JSports.controller.UsuarioController;
+import br.edu.infnet.leticia.JSports.dto.UsuarioDTO;
 import br.edu.infnet.leticia.JSports.enums.TipoUsuario;
-import br.edu.infnet.leticia.JSports.model.Endereco;
+import br.edu.infnet.leticia.JSports.model.domain.Endereco;
+import br.edu.infnet.leticia.JSports.model.domain.Usuario;
 import br.edu.infnet.leticia.JSports.utils.InputUtils;
 import br.edu.infnet.leticia.JSports.utils.LoginUtils;
 
@@ -16,9 +18,14 @@ import br.edu.infnet.leticia.JSports.utils.LoginUtils;
 public class MenuInicial implements CommandLineRunner {
 
 	static Scanner in = new Scanner(System.in);
+	Usuario user = new Usuario();
 
 	@Autowired
 	private UsuarioController usuarioController;
+	@Autowired
+	private VendedorView vendedorView;
+	@Autowired
+	private ClienteView clienteView;
 
 	@Override
 	public void run(String... args) {
@@ -30,6 +37,7 @@ public class MenuInicial implements CommandLineRunner {
 
 		int opcao;
 		do {
+			System.out.println("");
 			System.out.print("\033[0m\033[36m┌════ Login JSports ═══┐");
 			System.out.format("\n│ %-1s | %-15s │", "N°", "Ações");
 			System.out.print("\n├────┼─────────────────┤");
@@ -152,12 +160,21 @@ public class MenuInicial implements CommandLineRunner {
 		String email = gerenciarEmail();
 		String senha = InputUtils.inputStr(in, "\033[0;93mInsira sua senha: ");
 
-		boolean login = usuarioController.realizarLogin(email, senha);
+		UsuarioDTO login = usuarioController.realizarLogin(email, senha);
 
-		if (login) {
-			System.out.println("✅ Login realizado com sucesso.\n");
+		if (login != null) {
+			int tipo = usuarioController.iniciarSessao(login);
+
+			if (tipo == 1) {
+				vendedorView.iniciarMenuVendedor(in);
+			} else {
+				clienteView.iniciarMenuCliente(in);
+			}
+
 		} else {
 			System.out.println("\033[41m❌ E-mail ou senha incorretos.\n");
 		}
+
 	}
+
 }

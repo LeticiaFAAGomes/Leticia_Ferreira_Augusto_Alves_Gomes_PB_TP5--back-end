@@ -1,4 +1,4 @@
-package br.edu.infnet.leticia.JSports.model;
+package br.edu.infnet.leticia.JSports.model.domain;
 
 public class Endereco {
     

@@ -3,6 +3,7 @@ package br.edu.infnet.leticia.JSports.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.edu.infnet.leticia.JSports.dto.UsuarioDTO;
 import br.edu.infnet.leticia.JSports.enums.TipoUsuario;
 import br.edu.infnet.leticia.JSports.service.UsuarioService;
 
@@ -16,7 +17,12 @@ public class UsuarioController {
         return usuarioService.executarCadastro(nome, email, senha, telefone, tipoUsuario);
     }
 
-    public boolean realizarLogin(String email, String senha) {
+    public UsuarioDTO realizarLogin(String email, String senha) {
         return usuarioService.executarLogin(email, senha);
     }
+    
+    public int iniciarSessao(UsuarioDTO login) {
+        return usuarioService.definirTipoSessao(login);
+    }
+	
 }

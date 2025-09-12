@@ -25,15 +25,21 @@ public class UsuarioService {
 		}
 	}
 
-	public boolean executarLogin(String email, String senha) {
+	public UsuarioDTO executarLogin(String email, String senha) {
 
 		try {
 			return CsvUtils.encontrarCadastro(new UsuarioDTO(email, senha), CAMINHO);
+			
 		} catch (FileNotFoundException e) {
 			System.err.println("\033[41m❌ Arquivo de autenticação não encontrado.");
 		} catch (IOException e) {
 			System.err.println("\033[41m❌ Erro ao ler o arquivo de autenticação.");
 		}
-		return false;
+		return null;
 	}
+	
+	public int definirTipoSessao(UsuarioDTO login) {
+		return login.getTipoUsuario() == TipoUsuario.VENDEDOR? 1 : 2;
+	}
+	
 }
