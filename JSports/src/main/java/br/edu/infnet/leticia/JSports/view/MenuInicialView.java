@@ -15,7 +15,7 @@ import br.edu.infnet.leticia.JSports.utils.InputUtils;
 import br.edu.infnet.leticia.JSports.utils.LoginUtils;
 
 @Component
-public class MenuInicial implements CommandLineRunner {
+public class MenuInicialView implements CommandLineRunner {
 
 	static Scanner in = new Scanner(System.in);
 	Usuario user = new Usuario();
