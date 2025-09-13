@@ -1,5 +1,6 @@
 package br.edu.infnet.leticia.JSports.utils;
 
+import java.math.BigDecimal;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -34,5 +35,23 @@ public class InputUtils {
 				in.nextLine();
 			}
 		}
+	}
+	
+	public static BigDecimal inputDec(Scanner in, String enunciado) {
+
+		BigDecimal dec;
+	
+		do {
+			try {
+				System.out.print(enunciado);
+				dec = new BigDecimal(in.nextLine());
+				
+				return dec;
+				
+			} catch (NumberFormatException  e) {
+				System.out.println("\033[41m❌ Entrada inválida. Digite um valor válido.");
+			}
+		} while (true);
+
 	}
 }
