@@ -18,7 +18,7 @@ public class CsvUtils {
 	public static void salvarCadastro(UsuarioDTO usuarioCadastrado, String caminho) throws IOException {
 
 		cadastro.setDataCriacao();
-		cadastro.setDataCriacao();
+		cadastro.setDataAtualizacao();
 		cadastro.setId(
 				encontrarId("src\\main\\java\\br\\edu\\infnet\\leticia\\JSports\\files\\autenticacoes_jsports.csv"));
 		Long id = cadastro.getId();
