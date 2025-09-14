@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import br.edu.infnet.leticia.JSports.controller.UsuarioController;
@@ -13,6 +14,7 @@ import br.edu.infnet.leticia.JSports.model.domain.Endereco;
 import br.edu.infnet.leticia.JSports.model.domain.Usuario;
 import br.edu.infnet.leticia.JSports.utils.InputUtils;
 import br.edu.infnet.leticia.JSports.utils.LoginUtils;
+import br.edu.infnet.leticia.JSports.utils.MenuUtils;
 
 @Component
 public class MenuInicialView implements CommandLineRunner {
@@ -37,22 +39,22 @@ public class MenuInicialView implements CommandLineRunner {
 
 		int opcao;
 		do {
-			System.out.println("");
-			System.out.print("\033[0m\033[36m┌════ Login JSports ═══┐");
-			System.out.format("\n│ %-1s | %-15s │", "N°", "Ações");
-			System.out.print("\n├────┼─────────────────┤");
-			System.out.format("\n│ %-20s │\n│ %-20s │\n│ %-20s │\n", "1  | Cadastrar", "2  | Fazer login", "0  | Sair");
-			System.out.print("└────┴─────────────────┘");
+			
+			MenuUtils.imprimirMenu("\033[0m\033[36m", "Login JSports",
+					Arrays.asList("N°", "Ações"),
+					Arrays.asList(Arrays.asList("1", "Cadastrar"), 
+							Arrays.asList("2", "Fazer login"), 
+							Arrays.asList( "3", "Sair")));
 
 			opcao = InputUtils.inputInt(in, "\033[0;93m\nInsira sua opção: \033[1;93m");
 
 			switch (opcao) {
 			case 1 -> iniciarCadastro();
 			case 2 -> iniciarLogin();
-			case 0 -> System.out.print("Encerrando programa...");
+			case 3 -> System.out.print("Encerrando programa...");
 			default -> System.out.println("Opção inválida.");
 			}
-		} while (opcao != 0);
+		} while (opcao != 3);
 	}
 
 	public String gerenciarEmail() {
