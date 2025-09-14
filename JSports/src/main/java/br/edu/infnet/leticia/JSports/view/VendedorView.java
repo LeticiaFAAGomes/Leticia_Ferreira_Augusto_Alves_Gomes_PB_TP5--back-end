@@ -17,7 +17,7 @@ import br.edu.infnet.leticia.JSports.utils.MenuUtils;
 @Component
 public class VendedorView {
 
-	private List<ItemEsportivo> produtos = new ArrayList<>();
+	private List<ItemEsportivo> itensEsportivos = new ArrayList<>();
 
 	public void iniciarMenuVendedor(Scanner in) {
 
@@ -35,7 +35,7 @@ public class VendedorView {
 				cadastrarItemEsportivo(in);
 				break;
 			case 2:
-				System.out.println("Gerenciar Produtos");
+				gerenciarItensEsportivos(in);
 				break;
 			case 3:
 				System.out.println("Preparar Pedido");
@@ -61,8 +61,7 @@ public class VendedorView {
 		ItemSubcategoria subcategoria = inserirSubcategoria(in, categoria);
 		BigDecimal preco = InputUtils.inputDec(in, "\033[0;93mInsira o preço do produto: \033[1;93m");
 		ItemEsportivo itemEsportivo = new ItemEsportivo(nome, quantidade, preco, categoria, subcategoria);
-
-		produtos.add(itemEsportivo);
+		itensEsportivos.add(itemEsportivo);
 
 		System.out.printf("\n✅ O item %s foi cadastrado com sucesso!\n", nome);
 	}
@@ -191,6 +190,97 @@ public class VendedorView {
 			default:
 				System.out.println("Opção inválida.");
 			}
+		} while (true);
+	}
+
+	public void gerenciarItensEsportivos(Scanner in) {
+
+		System.out.println("\033[45m\n════ Itens Esportivos Cadastrados ═══");
+		if (itensEsportivos.size() > 0) {
+			do {
+				int item;
+				MenuUtils.imprimirMenu("\n\033[0m\033[40m", "Gerenciamento", Arrays.asList("N°", "Ações"),
+						Arrays.asList(Arrays.asList("1", "Repor Estoque"), Arrays.asList("2", "Alterar preco"),
+								Arrays.asList("3", "Sair")));
+				item = InputUtils.inputInt(in, "\033[0;93m\nInsira a opção desejada: \033[1;93m");
+
+				switch (item) {
+				case 1:
+					reporEstoque(in);
+					break;
+				case 2:
+					alterarPreco(in);
+					break;
+				case 3:
+					return;
+				default:
+					System.out.println("Opção inválida.");
+				}
+			} while (true);
+		} else {
+			System.out.println("\nNão é possível gerenciar sem itens cadastrados.");
+		}
+
+	}
+
+	public void listarItensEsportivos() {
+
+		if (itensEsportivos.size() > 0) {
+			List<List<String>> lista = new ArrayList<List<String>>();
+			Long c = 1L;
+			for (ItemEsportivo itemEsportivo : itensEsportivos) {
+				itemEsportivo.setId(c);
+				List<String> linha = Arrays.asList(String.valueOf(itemEsportivo.getId()), itemEsportivo.getNome(),
+						String.valueOf(itemEsportivo.getQuantidade()), String.valueOf(itemEsportivo.getPreco()),
+						itemEsportivo.getCategoria().toString(), itemEsportivo.getSubcategoria().toString(),
+						itemEsportivo.getDataCriacao().toString(), itemEsportivo.getDataAtualizacao().toString());
+				lista.add(linha);
+				c++;
+			}
+			MenuUtils.imprimirMenu("\033[0m\033[40m", "Itens Cadastrados", Arrays.asList("Id", "Nome", "Quantidade",
+					"Preço", "Categoria", "Subcategoria", "Criação", "Atualização"), lista);
+		} else {
+			System.out.println("\nNão há itens cadastrados");
+		}
+
+	}
+
+	public void reporEstoque(Scanner in) {
+		do {
+			int idEscolhido;
+			listarItensEsportivos();
+			idEscolhido = InputUtils.inputInt(in,
+					"\033[0;93m\nInsira o id do produto que desejada alterar: \033[1;93m");
+			for (ItemEsportivo item : itensEsportivos) {
+				if (item.getId() == idEscolhido) {
+					int qtd = InputUtils.inputInt(in, "\033[0;93m\nInsira a quantidade para repor: \033[1;93m");
+					int resultado = item.getQuantidade() + qtd;
+					item.setDataAtualizacao();
+					item.setQuantidade(resultado);
+					listarItensEsportivos();
+					return;
+				}
+			}
+
+		} while (true);
+	}
+
+	public void alterarPreco(Scanner in) {
+		do {
+			int idEscolhido;
+			listarItensEsportivos();
+			idEscolhido = InputUtils.inputInt(in,
+					"\033[0;93m\nInsira o id do produto que desejada alterar: \033[1;93m");
+			for (ItemEsportivo item : itensEsportivos) {
+				if (item.getId() == idEscolhido) {
+					BigDecimal preco = InputUtils.inputDec(in, "\033[0;93m\nInsira o novo preço: \033[1;93m");
+					item.setDataAtualizacao();
+					item.setPreco(preco);
+					listarItensEsportivos();
+					return;
+				}
+			}
+
 		} while (true);
 	}
 
