@@ -1,45 +1,34 @@
 package br.edu.infnet.leticia.JSports.service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.edu.infnet.leticia.JSports.dto.UsuarioDTO;
 import br.edu.infnet.leticia.JSports.enums.TipoUsuario;
-import br.edu.infnet.leticia.JSports.utils.CsvUtils;
+import br.edu.infnet.leticia.JSports.model.domain.Usuario;
+import br.edu.infnet.leticia.JSports.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
 
-	private static final String CAMINHO = "src\\main\\java\\br\\edu\\infnet\\leticia\\JSports\\files\\autenticacoes_jsports.csv";
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
-	public boolean executarCadastro(String nome, String email, String senha, String telefone, TipoUsuario tipoUsuario) {
-
-		try {
-			CsvUtils.salvarCadastro(new UsuarioDTO(nome, email, senha, telefone, tipoUsuario), CAMINHO);
-			return true;
-		} catch (IOException e) {
-			System.err.print("\033[41m❌ O sistema não pôde gravar o arquivo especificado.");
-			return false;
-		}
+	public Usuario salvar(Usuario usuario) {
+		return usuarioRepository.save(usuario);
 	}
 
-	public UsuarioDTO executarLogin(String email, String senha) {
+	public Usuario autenticar(String email, String senha) {
+		return usuarioRepository.findByEmailAndSenha(email, senha).orElse(null);
+	}
 
-		try {
-			return CsvUtils.encontrarCadastro(new UsuarioDTO(email, senha), CAMINHO);
-			
-		} catch (FileNotFoundException e) {
-			System.err.println("\033[41m❌ Arquivo de autenticação não encontrado.");
-		} catch (IOException e) {
-			System.err.println("\033[41m❌ Erro ao ler o arquivo de autenticação.");
-		}
-		return null;
+	public List<Usuario> listarPorTipo(TipoUsuario tipoUsuario) {
+		return usuarioRepository.findByTipoUsuario(tipoUsuario);
 	}
-	
-	public int definirTipoSessao(UsuarioDTO login) {
-		return login.getTipoUsuario() == TipoUsuario.VENDEDOR? 1 : 2;
+
+	public Usuario buscarPorId(Long id) {
+		return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 	}
-	
+
 }

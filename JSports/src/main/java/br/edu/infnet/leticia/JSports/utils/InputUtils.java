@@ -21,9 +21,9 @@ public class InputUtils {
 	}
 
 	public static int inputInt(Scanner in, String mensagem) {
-		
+
 		int valor;
-		
+
 		while (true) {
 			try {
 				System.out.print(mensagem);
@@ -36,19 +36,19 @@ public class InputUtils {
 			}
 		}
 	}
-	
+
 	public static BigDecimal inputDec(Scanner in, String enunciado) {
 
 		BigDecimal dec;
-	
+
 		do {
 			try {
 				System.out.print(enunciado);
 				dec = new BigDecimal(in.nextLine());
-				
+
 				return dec;
-				
-			} catch (NumberFormatException  e) {
+
+			} catch (NumberFormatException e) {
 				System.out.println("\033[41m❌ Entrada inválida. Digite um valor válido.");
 			}
 		} while (true);

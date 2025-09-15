@@ -1,89 +1,125 @@
 package br.edu.infnet.leticia.JSports.model.domain;
 
-public class Endereco {
-    
-    private String rua;
-    private String numero;
-    private String bairro;
-    private String complemento;
-    private String cidade;
-    private String estado;
-    private String cep;
+import br.edu.infnet.leticia.JSports.dto.EnderecoDTO;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 
-    public Endereco() {}
+@Entity
+public class Endereco extends Model {
 
-    public Endereco(String rua, String numero, String bairro, String complemento, String cidade, String estado, String cep) {
-        this.rua = rua;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.complemento = complemento;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.cep = cep;
-    }
-    
-    public Endereco(String rua, String numero, String bairro, String cidade, String estado, String cep) {
-        this.rua = rua;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.cep = cep;
-    }
+	@NotNull
+	private String rua;
+	@NotNull
+	private String numero;
+	@NotNull
+	private String bairro;
+	private String complemento;
+	@NotNull
+	private String cidade;
+	@NotNull
+	private String estado;
+	@NotNull
+	private String cep;
 
-    public String getRua() {
-        return rua;
-    }
+	public Endereco() {
+	}
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
+	public Endereco(String rua, String numero, String bairro, String complemento, String cidade, String estado,
+			String cep) {
+		this.rua = rua;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.complemento = complemento;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.cep = cep;
+	}
 
-    public String getNumero() {
-        return numero;
-    }
+	public Endereco(String rua, String numero, String bairro, String cidade, String estado, String cep) {
+		this.rua = rua;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.cep = cep;
+	}
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
+	public Endereco(EnderecoDTO dto) {
+		this.setRua(dto.getRua());
+		this.setNumero(dto.getNumero());
+		this.setBairro(dto.getBairro());
+		this.setComplemento(dto.getComplemento());
+		this.setCidade(dto.getCidade());
+		this.setEstado(dto.getEstado());
+		this.setCep(dto.getCep());
+	}
 
-    public String getBairro() {
-        return bairro;
-    }
+	public String getRua() {
+		return rua;
+	}
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
 
-    public String getComplemento() {
-        return complemento;
-    }
+	public String getNumero() {
+		return numero;
+	}
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
 
-    public String getCidade() {
-        return cidade;
-    }
+	public String getBairro() {
+		return bairro;
+	}
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
-    public String getEstado() {
-        return estado;
-    }
+	public String getComplemento() {
+		return complemento;
+	}
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
 
-    public String getCep() {
-        return cep;
-    }
+	public String getCidade() {
+		return cidade;
+	}
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public EnderecoDTO toDTO() {
+		EnderecoDTO dto = new EnderecoDTO();
+		dto.setRua(this.getRua());
+		dto.setNumero(this.getNumero());
+		dto.setBairro(this.getBairro());
+		dto.setComplemento(this.getComplemento());
+		dto.setCidade(this.getCidade());
+		dto.setEstado(this.getEstado());
+		dto.setCep(this.getCep());
+		return dto;
+	}
+
 }

@@ -74,4 +74,13 @@ public final class LoginUtils {
 			throw new IllegalArgumentException("Tipo de usuário inválido: " + tipoUsuario);
 		}
 	}
+
+	public static boolean validarCpf(String cpf) {
+		return cpf != null && cpf.matches("\\d{11}");
+	}
+
+	public static boolean validarCnpj(String cnpj) {
+		return cnpj != null && cnpj.matches("\\d{14}");
+	}
+
 }
