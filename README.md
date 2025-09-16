@@ -127,7 +127,6 @@ O projeto utiliza o **H2 Database** como banco de dados em memória para facilit
   ```
   http://localhost:8080/swagger-ui.html
   ```
-  (Assumindo que a porta padrão do Spring Boot seja 8080).
 
 ---
 
